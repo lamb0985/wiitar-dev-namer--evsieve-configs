@@ -12,7 +12,7 @@ https://github.com/Oblomov/wiimote-pad/blob/master/70-wiimote.rules   <---This w
 
 The folder above has the following contents:
 
-1) The UDEV rule that can be copied to /etc/udev/rules.d (You will have to change your paths from what I have in order to make this work).
+1) The UDEV rule that can be copied to /etc/udev/rules.d (You will have to change your paths from what I have in order to make this work). Be sure to type "udevadm control --reload-rules && udevadm trigger" in order to reload the rules and trigger them. **Also if running batocera, you'll want to make sure you type "batocera-save-overlay" if you want this rule to persistent after a reboot!
 
 2) The wiitar-dev-namer-* files that will be called from the UDEV rule that was added, in order to create symlinks of the different wiimote inputs linux likes to split up and assign to a random /input/event*. I also added a wiitar-dev-namer-clear file that should remove any leftover wiimote* inputs after the controllers have been disconnected (This will also have to be edited if you choose a different naming scheme for your /dev/input names.
 
