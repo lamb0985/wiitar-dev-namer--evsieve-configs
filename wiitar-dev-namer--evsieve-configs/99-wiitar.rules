@@ -1,0 +1,17 @@
+ENV{WIIMOTE}="1"
+
+KERNEL!="event[0-9]*", GOTO="wiimote_end"
+ENV{WIIMOTE}!="1", GOTO="wiimote_end", RUN+="/userdata/roms/clonehero/wiitar-dev-namer-clear"
+
+ATTRS{name}=="Nintendo Wii Remote", PROGRAM="/userdata/roms/clonehero/wiitar-dev-namer--evsieve-configs/wiitar-dev-namer-wiimote %k", SYMLINK+="%c"
+
+ATTRS{name}=="Nintendo Wii Remote Accelerometer", PROGRAM="/userdata/roms/clonehero/wiitar-dev-namer--evsieve-configs/wiitar-dev-namer-accel %k", SYMLINK+="%c"
+
+ATTRS{name}=="Nintendo Wii Remote Guitar", PROGRAM="/userdata/roms/clonehero/wiitar-dev-namer--evsieve-configs/wiitar-dev-namer-guitar %k", SYMLINK+="%c"
+
+RUN+="/userdata/roms/clonehero/wiitar-dev-namer--evsieve-configs/wiitar1"
+RUN+="/userdata/roms/clonehero/wiitar-dev-namer--evsieve-configs/wiitar2"
+RUN+="/userdata/roms/clonehero/wiitar-dev-namer--evsieve-configs/wiitar3"
+RUN+="/userdata/roms/clonehero/wiitar-dev-namer--evsieve-configs/wiitar4"
+
+LABEL="wiimote_end"
