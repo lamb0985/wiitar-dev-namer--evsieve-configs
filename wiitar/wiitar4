@@ -1,0 +1,33 @@
+#!/bin/bash
+
+evsieve \
+    --input /dev/input/wiimote4 domain=wiimote4 grab persist=exit \
+        --map btn:south@wiimote4 btn:mode@wiitar4 \
+        --map btn:1@wiimote4 btn:thumbl@wiitar4 \
+        --map btn:2@wiimote4 btn:thumbr@wiitar4 \
+        --map btn:mode@wiimote4 btn:z@wiitar4 \
+        --map key:next@wiimote4 btn:start@wiitar4 \
+        --map key:previous@wiimote4 btn:select@wiitar4 \
+        --map key:left@wiimote4 btn:dpad_up@wiitar4 \
+        --map key:right@wiimote4 btn:dpad_down@wiitar4 \
+        --map key:up@wiimote4 btn:dpad_left@wiitar4 \
+        --map key:down@wiimote4 btn:dpad_right@wiitar4 \
+    --input /dev/input/wiimote-guitar4 domain=guitar4 grab persist=exit \
+        --map btn:1@guitar4 btn:south@wiitar4 \
+        --map btn:2@guitar4 btn:east@wiitar4 \
+        --map btn:3@guitar4 btn:north@wiitar4 \
+        --map btn:4@guitar4 btn:west@wiitar4 \
+        --map btn:5@guitar4 btn:tl@wiitar4 \
+        --map btn:start@guitar4 btn:start@wiitar4 \
+        --map btn:select@guitar4 btn:select@wiitar4 \
+        --map btn:dpad_up@guitar4 btn:dpad_up@wiitar4 \
+        --map btn:dpad_down@guitar4 btn:dpad_down@wiitar4 \
+        --map abs:hat1x@guitar4 abs:rx:3x@wiitar4 \
+        --map abs:x@guitar4 abs:x@wiitar4 \
+        --map abs:y@guitar4 abs:y@wiitar4 \
+    --input /dev/input/wiimote-accel4 domain=accel4 grab persist=exit \
+        --block abs:rz@accel4 abs:rx@accel4 \
+        --map abs:ry:-59~..~-60@accel4 btn:select:1@wiitar4 \
+        --map abs:ry:~-60..-59~@accel4 btn:select:0@wiitar4 \
+    --output name="Wiitar w/ Tilt 4" @wiitar4
+

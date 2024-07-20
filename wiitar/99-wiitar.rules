@@ -1,0 +1,33 @@
+#99-wiitar.rules that creates symbolic links to wiimote events at dev/input/wiimote*
+#Any commands that say RUN+="" will need to have their paths adjusted to wherever you choose
+#to put the files and make sure that they have executable permissions!
+
+#This sets an environment variable WIIMOTE to 1 if it’s not already set.
+ENV{WIIMOTE}="1" #This sets an environment variable WIIMOTE to 1 if it’s not already set.
+
+#If the device kernel name doesn't match event[0-9]*, it skips the rest of the rules and jumps to wiimote_end.
+KERNEL!="event[0-9]*", GOTO="wiimote_end" #If the device kernel name doesn't match event[0-9]*, it skips the rest of the rules and jumps to wiimote_end.
+
+#If WIIMOTE is not 1, it skips to wiimote_end.
+ENV{WIIMOTE}!="1", GOTO="wiimote_end"
+
+#Runs a script to name the device as wiimote if it’s a Nintendo Wii Remote.
+ATTRS{name}=="Nintendo Wii Remote", RUN+="/userdata/roms/clonehero/wiitar/wiitar-namer wiimote"
+
+#Names the device as wiimote-accel if it’s the accelerometer part of the Wii Remote.
+ATTRS{name}=="Nintendo Wii Remote Accelerometer", RUN+="/userdata/roms/clonehero/wiitar/wiitar-namer wiimote-accel"
+
+#Names the device as wiimote-guitar if it’s the Guitar Hero accessory.
+ATTRS{name}=="Nintendo Wii Remote Guitar", RUN+="/userdata/roms/clonehero/wiitar/wiitar-namer wiimote-guitar"
+
+#Runs scripts for wiitars based on the order that they connected.
+RUN+="/userdata/roms/clonehero/wiitar/wiitar1"
+RUN+="/userdata/roms/clonehero/wiitar/wiitar2"
+RUN+="/userdata/roms/clonehero/wiitar/wiitar3"
+RUN+="/userdata/roms/clonehero/wiitar/wiitar4"
+
+#Cleans up any leftover created wiimote symlinks
+ACTION=="remove", RUN+="/userdata/roms/clonehero/wiitar/wiitar-cleanup"
+
+#If no conditions are met, do not run the script and go to wiimote_end
+LABEL="wiimote_end"
