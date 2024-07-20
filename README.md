@@ -7,7 +7,9 @@ This project is designed for the small percentage of people who have been stress
 First of all, big shout out to the people that actually helped in making this possible through hours of google searching:
 
 https://cohost.org/ticky/post/3622903-well-i-finally-sat   <---Took the time to map out the template for the separate wiimote inputs so they can be mapped to the virtual input using evsieve!
+
 https://retropie.org.uk/forum/topic/21251/static-dev-input-entry-for-bluetooth-controllers   <---amazing little piece of code that does all the work of assigning wii inputs into static addressable inputs!
+
 https://github.com/Oblomov/wiimote-pad/blob/master/70-wiimote.rules   <---This was the final piece of the puzzle that helped me really understand what can be done with UDEV rules!
 
 The folder above has the following contents:
