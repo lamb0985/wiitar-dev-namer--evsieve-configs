@@ -1,3 +1,0 @@
-#!/bin/bash
-rm /dev/input/wiimote*
-echo "removed leftover wiimote devices"
