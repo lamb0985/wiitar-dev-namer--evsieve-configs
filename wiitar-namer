@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Ensure the script receives the device identifier (%k) and device name as arguments from the
+# 99-wiitar.rules
+DEVNAME="$1"
+DEVICENAME="$2"
+
+# Destination directory for symlinks
+DESTINATION_DIR="/dev/input"
+
+# Initialize a counter variable (for identifying symlinked devices in /dev/input)
+COUNTER=1
+
+# Checks to see if a symlink already exists with that name. Loop to find the next available 
+# symlink name
+while true; do
+    SYMLINK_NAME="$DEVICENAME$COUNTER"
+    if [ ! -e "$DESTINATION_DIR/$SYMLINK_NAME" ]; then
+        # Create the symlink if it doesn't already exist
+        ln -sf "/dev/input/$DEVNAME" "$DESTINATION_DIR/$SYMLINK_NAME"
+        echo "Created symlink: $DESTINATION_DIR/$SYMLINK_NAME -> /dev/input/$DEVNAME"
+
+        # Check if wiiguitar symlink exists after 2 seconds for each group of devices added.
+        # This determines if a guitar is connected or not. If not, those symlinks are deleted.
+        sleep 2
+        if [ ! -e "$DESTINATION_DIR/wiiguitar$COUNTER" ]; then
+            rm -f "$DESTINATION_DIR/$SYMLINK_NAME"
+            echo "Removed symlink: $DESTINATION_DIR/$SYMLINK_NAME (wiiguitar$COUNTER does not exist)"
+        fi
+
+        break
+    fi
+    ((COUNTER++))
+done
+
+exit 0

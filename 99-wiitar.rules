@@ -1,0 +1,31 @@
+# 99-wiitar.rules # This UDEV rule symlinks kernel event inputs to identifiable names of your 
+# choosing, so that they can be remapped using evsieve. It is configured to be used with the
+# wiitar-namer and wiitar(1-4) files included. These program paths will need to be updated in this # UDEV rule to point to wherever you choose to put the files. 
+
+# Set ENV{WIIMOTE} to 1 for Nintendo Wii Devices
+ENV{WIIMOTE}="1"
+
+# Skip to the end of script if a kernel event input or wiimote is not detected.
+KERNEL!="event[0-9]*", GOTO="wiimote_end"
+ENV{WIIMOTE}!="1", GOTO="wiimote_end"
+
+# Rule for /dev/input/event* to be symlinked to 'wiimote*''
+SUBSYSTEM=="input", ATTRS{name}=="Nintendo Wii Remote", \
+    RUN+="/userdata/roms/clonehero/wiitar/wiitar-namer %k 'wiimote'"
+
+# Rule for /dev/input/event* to be symlinked to 'wiiaccel*''
+SUBSYSTEM=="input", ATTRS{name}=="Nintendo Wii Remote Accelerometer", \
+    RUN+="/userdata/roms/clonehero/wiitar/wiitar-namer %k 'wiiaccel'"
+
+# Rule for /dev/input/event* to be symlinked to 'wiiguitar*''
+SUBSYSTEM=="input", ATTRS{name}=="Nintendo Wii Remote Guitar", \
+    RUN+="/userdata/roms/clonehero/wiitar/wiitar-namer %k 'wiiguitar'"
+
+# Run scripts for wiitars based on the order that they connected.
+RUN+="/bin/bash -c 'for i in {1..4}; do /userdata/roms/clonehero/wiitar/wiitar$i; done'"
+
+# Clean up broken Wiimote symlinks on device removal
+ACTION=="remove", RUN+="/userdata/roms/clonehero/wiitar/wiitar-cleanup"
+
+# End processing if no conditions are met
+LABEL="wiimote_end"
